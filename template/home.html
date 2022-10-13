@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+    <style>
+body{
+   color:black;
+   background-color:rgb(200 200 200)
+}
+h1{
+  text-align:center
+  border-radius: 25px;
+  color:white;
+  background-color: black;
+  width: 900px;
+  padding: 40px;
+  margin: 0px;
+}
+.tite{
+    border-radius:25px;
+    color:white;
+    background-color:black;
+    padding:20px
+}
+a:link{
+   text-decoration:none;
+   color:black;
+   cursor:pointer;
+   }
+ a:visited{
+        text-decoration:none;
+        color:rgb(0 0 0);
+        cursor:pointer
+ }
+ a:hover{
+    text-decoration:underline;
+    color:rgb(0 20 250);
+    cursor:pointer
+ }
+ .del{
+    border-radius:25px;
+    color:white;
+    background-color:black;
+    padding:10px
+    cursor:pointer;
+ }
+ p{
+ font:italic bold 12px/30px Georgia,serif;
+ }
+    </style>
+</head>
+<body>
+
+<h1>TO-DO LIST</h1>
+<h3><label>Add List:</label></h3>
+    <div>
+    <form action="/" method="post">
+            {% csrf_token %}
+            <nav class="navbar bg-light">
+  <div class="container-fluid">
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="text" name="content" placeholder="write here" aria-label="Search" style="height:60px; width:500px" autofocus>
+      <button class="tite" type="submit">Submit</button>
+    </form>
+  </div>
+</nav>
+     </form>
+    </div>
+ {% for ToDo_app in post reversed %}
+ <a href="/content/{{ToDo_app.id}}">
+     <ul type="square">
+         <li>
+     <p>{{ToDo_app.content|truncatewords:15}}</p>
+    <p>{{ToDo_app.date_created}}</p></li>
+     </ul>
+     </a>
+<form action="/delete/{{ToDo_app.id}}" method="post" class="delete">
+    {% csrf_token %}
+    <input type="submit" value="Delete" class="del">
+</form>
+{% endfor %}
+</body>
+</html>
